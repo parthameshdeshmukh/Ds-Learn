@@ -271,13 +271,31 @@ Each school's branding configuration is loaded dynamically on both Web and Mobil
 
 ---
 
-## 9. Mobile App & Google Play Store Strategy
+## 9. Technology Stack & Scalability Architecture
+
+To ensure linear scalability, high security, and maximum code sharing between Web and Mobile:
+
+| Layer | Technology Selected | Scalability & Implementation Rationale |
+|---|---|---|
+| **Web Frontend** | **Next.js (React 19 / TypeScript) + Tailwind CSS** | Server-side rendering, dynamic tenant slug routing (`/school/[slug]`), and Shadcn UI components. |
+| **Mobile App (Play Store)** | **React Native with Expo** | Native Android app on Google Play Store sharing React hooks, state, types, and API calls with web. |
+| **Mobile Build & Release** | **Expo EAS (Cloud Build & Submit)** | Automated CI/CD pipeline generating production Google Play `.aab` (Android App Bundle) binaries without manual Android Studio overhead. |
+| **Backend & API Layer** | **Node.js (TypeScript) / Next.js API Routes** | High-concurrency async I/O, type-safe API contracts, fast JSON serialization. |
+| **Database Engine** | **PostgreSQL (Supabase / Neon)** | ACID compliance, connection pooling (PgBouncer), and **Row-Level Security (RLS)** for unbreachable multi-tenant data isolation. |
+| **ORM / Query Layer** | **Drizzle ORM / Prisma** | End-to-end type safety from database to React UI, zero runtime overhead, reproducible migrations. |
+| **Receipt Engine** | **`@react-pdf/renderer`** | Generates dynamic, branded driving school payment receipts in PDF directly from React components. |
+| **Asset & Receipt Storage** | **Cloudflare R2 / AWS S3** | S3-compatible cloud storage for school logos and receipts with **$0 egress fees**. |
+| **Communication / Push** | **Meta WhatsApp Cloud API + Expo Push (FCM)** | Automated WhatsApp receipts/alerts and instant Android native push notifications. |
+
+---
+
+## 10. Mobile App & Google Play Store Strategy
 
 Since the app will be published to the **Google Play Store**:
 
 ### Recommended Architecture: React Native with Expo (Hybrid Native)
 - **Why Expo/React Native:**
-  - Single TypeScript codebase power both the **Google Play Store Android App** and the **Web Application**.
+  - Single TypeScript codebase powers both the **Google Play Store Android App** and the **Web Application**.
   - Dynamic white-label theming supported out-of-the-box (React Context / ThemeProvider updates colors, logos, and headers based on active school).
   - Native performance with push notifications (Expo Notifications), camera/receipt uploads, and offline cache.
 
@@ -292,7 +310,7 @@ Since the app will be published to the **Google Play Store**:
 
 ---
 
-## 10. Database Schema (PostgreSQL Blueprint)
+## 11. Database Schema (PostgreSQL Blueprint)
 
 ```mermaid
 erDiagram
@@ -392,7 +410,7 @@ erDiagram
 
 ---
 
-## 11. V1 Scope Boundaries (Strict Adherence)
+## 12. V1 Scope Boundaries (Strict Adherence)
 
 | Module | In V1 Scope | Post-V1 (Explicitly Excluded) |
 |---|---|---|
@@ -405,7 +423,7 @@ erDiagram
 
 ---
 
-## 12. Next Action Plan & Milestones
+## 13. Next Action Plan & Milestones
 
 1. **Phase 1: Environment & Foundational Architecture**
    - Initialize Git repository and project structure.
