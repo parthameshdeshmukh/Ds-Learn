@@ -41,7 +41,11 @@ export interface DrivingLesson {
   vehicle: string;
   topic: string;
   status: 'SCHEDULED' | 'COMPLETED' | 'CANCELLED';
+  pickupLocation?: string;
+  lessonNumber?: number;
+  totalLessons?: number;
   notes?: string;
+  skillsAssessed?: string[];
 }
 
 export interface PaymentRecord {
