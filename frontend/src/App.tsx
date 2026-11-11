@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { TenantProvider, useTenant } from './context/TenantContext';
 import { Header } from './components/Header';
 import { Sidebar } from './components/Sidebar';
@@ -24,6 +24,17 @@ import { RescheduleLessonModal } from './components/modals/RescheduleLessonModal
 const AppContent: React.FC = () => {
   const { activeRole } = useTenant();
   const [activeTab, setActiveTab] = useState<string>('dashboard');
+
+  // Automatically sync initial active tab when role changes
+  useEffect(() => {
+    if (activeRole === 'SCHOOL_OWNER') {
+      setActiveTab('dashboard');
+    } else if (activeRole === 'INSTRUCTOR') {
+      setActiveTab('schedule');
+    } else if (activeRole === 'STUDENT') {
+      setActiveTab('course');
+    }
+  }, [activeRole]);
 
   const isOwner = activeRole === 'SCHOOL_OWNER';
 
@@ -54,10 +65,14 @@ const AppContent: React.FC = () => {
           )}
 
           {/* Role 2: Driving Instructor (Mobile Phone View) */}
-          {activeRole === 'INSTRUCTOR' && <InstructorView />}
+          {activeRole === 'INSTRUCTOR' && (
+            <InstructorView activeTab={activeTab} onNavigateTab={setActiveTab} />
+          )}
 
           {/* Role 3: Student Portal (Mobile Phone View) */}
-          {activeRole === 'STUDENT' && <StudentPortalView />}
+          {activeRole === 'STUDENT' && (
+            <StudentPortalView activeTab={activeTab} onNavigateTab={setActiveTab} />
+          )}
         </main>
 
         {/* Bottom Navigation (Always on Phone, hidden on Desktop for Owner) */}
