@@ -3,108 +3,90 @@ import { useTenant } from '../context/TenantContext';
 import type { UserRole } from '../types';
 
 export const Header: React.FC = () => {
-  const { activeSchool, activeRole, setActiveRole, setIsTenantModalOpen, notificationsCount } = useTenant();
+  const { activeSchool, activeRole, setActiveRole, setIsTenantModalOpen } = useTenant();
   const [showRoleMenu, setShowRoleMenu] = useState(false);
 
-  const roleTitles: Record<UserRole, string> = {
-    SCHOOL_OWNER: 'Owner Dashboard',
-    STUDENT: 'Learning Hub',
-    TRAINER: 'Instructor Cockpit',
-    SUPER_ADMIN: 'Super Admin',
+  const roleNames: Record<UserRole, string> = {
+    SCHOOL_OWNER: 'Owner / Receptionist',
+    INSTRUCTOR: 'Driving Instructor',
+    STUDENT: 'Student Portal',
   };
 
   return (
-    <header className="fixed top-0 w-full z-50 pt-safe bg-surface/90 backdrop-blur-xl border-b border-surface-container shadow-[0_1px_8px_rgba(0,0,0,0.04)] transition-colors">
-      <div className="h-16 px-gutter-sm max-w-5xl mx-auto flex items-center justify-between gap-space-sm">
-        {/* School Identity & Dynamic Brand */}
-        <div className="flex items-center gap-space-sm min-w-0 flex-1">
-          <div className="w-10 h-10 rounded-xl bg-primary-container text-on-primary-container flex items-center justify-center flex-shrink-0 shadow-sm transition-colors">
-            <span className="material-symbols-outlined text-[22px]">{activeSchool.logoIcon}</span>
+    <header className="bg-white border-b border-slate-200 sticky top-0 z-40">
+      <div className="max-w-5xl mx-auto px-4 h-16 flex items-center justify-between gap-3">
+        {/* Driving School Branding */}
+        <div className="flex items-center gap-3 min-w-0">
+          <div
+            className="w-10 h-10 rounded-lg flex items-center justify-center text-white flex-shrink-0 shadow-sm"
+            style={{ backgroundColor: activeSchool.primaryColor }}
+          >
+            <span className="material-symbols-outlined text-[24px]">{activeSchool.logoIcon}</span>
           </div>
-          <div className="flex flex-col min-w-0">
-            <div className="flex items-center gap-space-xs flex-wrap">
-              <span className="font-label-sm text-label-sm text-tertiary uppercase tracking-wider font-semibold truncate">
-                {activeSchool.name}
-              </span>
-              <span className="inline-flex items-center px-1.5 py-0.5 rounded-full bg-secondary-container text-on-secondary-fixed-variant font-label-sm text-[10px]">
-                Multi-Tenant
-              </span>
-            </div>
-            <h1 className="font-headline-sm text-headline-sm text-on-surface truncate">
-              {roleTitles[activeRole]}
+          <div className="min-w-0">
+            <h1 className="font-bold text-slate-900 text-base sm:text-lg truncate leading-tight">
+              {activeSchool.name}
             </h1>
+            <p className="text-xs text-slate-500 truncate">
+              Lic: {activeSchool.licenseNumber}
+            </p>
           </div>
         </div>
 
-        {/* Action Controls: Role Switcher & Tenant Switcher */}
-        <div className="flex items-center gap-space-xs flex-shrink-0">
-          {/* Quick Role Switcher Pill */}
+        {/* Right Side: Role Selector & School Switcher */}
+        <div className="flex items-center gap-2 flex-shrink-0">
+          {/* Role Switcher (Simulates User Perspective) */}
           <div className="relative">
             <button
               onClick={() => setShowRoleMenu(!showRoleMenu)}
-              className="flex items-center gap-1.5 px-2.5 py-1.5 rounded-lg bg-surface-container text-on-surface font-label-sm text-label-sm hover:bg-surface-container-high transition-colors border border-outline-variant/30"
-              title="Switch user perspective"
+              className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg border border-slate-200 bg-slate-50 hover:bg-slate-100 text-slate-700 text-xs sm:text-sm font-medium transition-colors"
             >
-              <span className="material-symbols-outlined text-[16px] text-primary">
-                {activeRole === 'SCHOOL_OWNER' ? 'admin_panel_settings' : activeRole === 'STUDENT' ? 'school' : 'sports_score'}
+              <span className="material-symbols-outlined text-[18px]" style={{ color: activeSchool.primaryColor }}>
+                {activeRole === 'SCHOOL_OWNER' ? 'admin_panel_settings' : activeRole === 'INSTRUCTOR' ? 'sports_score' : 'school'}
               </span>
-              <span className="hidden sm:inline font-medium">
-                {activeRole === 'SCHOOL_OWNER' ? 'Owner' : activeRole === 'STUDENT' ? 'Student' : 'Trainer'}
-              </span>
-              <span className="material-symbols-outlined text-[14px]">expand_more</span>
+              <span className="hidden sm:inline">{roleNames[activeRole]}</span>
+              <span className="material-symbols-outlined text-[16px] text-slate-400">expand_more</span>
             </button>
 
             {showRoleMenu && (
-              <div className="absolute right-0 mt-2 w-48 rounded-xl bg-surface-container-lowest shadow-xl border border-surface-container py-1.5 z-50 animate-in fade-in slide-in-from-top-2 duration-150">
-                <div className="px-3 py-1 text-[11px] font-label-sm text-on-surface-variant uppercase tracking-wider border-b border-surface-container">
-                  Simulate Role View
+              <div className="absolute right-0 mt-2 w-52 rounded-xl bg-white shadow-lg border border-slate-200 py-1.5 z-50 animate-in fade-in duration-100">
+                <div className="px-3 py-1 text-[11px] font-semibold text-slate-400 uppercase tracking-wider border-b border-slate-100">
+                  Switch User View
                 </div>
                 <button
                   onClick={() => { setActiveRole('SCHOOL_OWNER'); setShowRoleMenu(false); }}
-                  className={`w-full text-left px-3 py-2 text-sm flex items-center gap-2 hover:bg-surface-container transition-colors ${activeRole === 'SCHOOL_OWNER' ? 'text-primary font-semibold bg-surface-container-low' : 'text-on-surface'}`}
+                  className={`w-full text-left px-3 py-2 text-sm flex items-center gap-2.5 hover:bg-slate-50 ${activeRole === 'SCHOOL_OWNER' ? 'text-blue-600 font-semibold bg-blue-50/50' : 'text-slate-700'}`}
                 >
-                  <span className="material-symbols-outlined text-[18px]">admin_panel_settings</span>
-                  <span>School Owner Hub</span>
+                  <span className="material-symbols-outlined text-[20px]">admin_panel_settings</span>
+                  <span>Owner / Receptionist</span>
+                </button>
+                <button
+                  onClick={() => { setActiveRole('INSTRUCTOR'); setShowRoleMenu(false); }}
+                  className={`w-full text-left px-3 py-2 text-sm flex items-center gap-2.5 hover:bg-slate-50 ${activeRole === 'INSTRUCTOR' ? 'text-blue-600 font-semibold bg-blue-50/50' : 'text-slate-700'}`}
+                >
+                  <span className="material-symbols-outlined text-[20px]">sports_score</span>
+                  <span>Driving Instructor</span>
                 </button>
                 <button
                   onClick={() => { setActiveRole('STUDENT'); setShowRoleMenu(false); }}
-                  className={`w-full text-left px-3 py-2 text-sm flex items-center gap-2 hover:bg-surface-container transition-colors ${activeRole === 'STUDENT' ? 'text-primary font-semibold bg-surface-container-low' : 'text-on-surface'}`}
+                  className={`w-full text-left px-3 py-2 text-sm flex items-center gap-2.5 hover:bg-slate-50 ${activeRole === 'STUDENT' ? 'text-blue-600 font-semibold bg-blue-50/50' : 'text-slate-700'}`}
                 >
-                  <span className="material-symbols-outlined text-[18px]">school</span>
-                  <span>Student / Learner</span>
-                </button>
-                <button
-                  onClick={() => { setActiveRole('TRAINER'); setShowRoleMenu(false); }}
-                  className={`w-full text-left px-3 py-2 text-sm flex items-center gap-2 hover:bg-surface-container transition-colors ${activeRole === 'TRAINER' ? 'text-primary font-semibold bg-surface-container-low' : 'text-on-surface'}`}
-                >
-                  <span className="material-symbols-outlined text-[18px]">sports_score</span>
-                  <span>Trainer / Cockpit</span>
+                  <span className="material-symbols-outlined text-[20px]">school</span>
+                  <span>Student View</span>
                 </button>
               </div>
             )}
           </div>
 
-          {/* Tenant Switcher Button */}
+          {/* School Switcher (Multi-Tenant Demo) */}
           <button
             onClick={() => setIsTenantModalOpen(true)}
-            className="w-9 h-9 rounded-lg bg-surface-container-low text-primary flex items-center justify-center hover:bg-surface-container transition-colors border border-outline-variant/30"
-            title="Switch School Tenant"
+            title="Switch Driving School"
+            className="h-9 px-2.5 rounded-lg border border-slate-200 bg-white hover:bg-slate-50 text-slate-600 text-xs font-medium flex items-center gap-1 transition-colors"
           >
-            <span className="material-symbols-outlined text-[20px]">swap_horiz</span>
+            <span className="material-symbols-outlined text-[18px]">swap_horiz</span>
+            <span className="hidden md:inline">School</span>
           </button>
-
-          {/* Notifications Bell */}
-          <div className="relative">
-            <button
-              className="w-9 h-9 flex items-center justify-center rounded-lg text-on-surface-variant hover:text-on-surface hover:bg-surface-container transition-colors"
-              title="Notifications"
-            >
-              <span className="material-symbols-outlined text-[20px]">notifications</span>
-            </button>
-            {notificationsCount > 0 && (
-              <span className="absolute 1 top-1.5 right-1.5 w-2 h-2 rounded-full bg-error ring-2 ring-surface"></span>
-            )}
-          </div>
         </div>
       </div>
     </header>

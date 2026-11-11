@@ -1,64 +1,60 @@
-export type UserRole = 'SCHOOL_OWNER' | 'STUDENT' | 'TRAINER' | 'SUPER_ADMIN';
+export type UserRole = 'SCHOOL_OWNER' | 'INSTRUCTOR' | 'STUDENT';
 
 export interface SchoolTenant {
   id: string;
   name: string;
   slug: string;
   licenseNumber: string;
-  location: string;
   address: string;
   phone: string;
   email: string;
   primaryColor: string;
   primaryHover: string;
-  primaryContainer: string;
-  secondaryContainer: string;
+  primaryLight: string;
   logoIcon: string;
 }
 
-export interface StudentRecord {
+export interface Student {
   id: string;
   name: string;
-  initials: string;
-  avatarUrl?: string;
   phone: string;
-  email: string;
-  permitType: string;
-  cohort: string;
-  assignedCourse: string;
-  totalHours: number;
-  completedHours: number;
+  email?: string;
+  course: string;
+  instructorName: string;
   totalFee: number;
   paidAmount: number;
-  status: 'PENDING' | 'APPROVED' | 'ENROLLED' | 'COMPLETED';
-  licenseGoalDate?: string;
+  balance: number;
+  status: 'ACTIVE' | 'PENDING' | 'COMPLETED';
+  registrationDate: string;
+  completedLessons: number;
+  totalLessons: number;
 }
 
-export interface TriadSession {
+export interface DrivingLesson {
   id: string;
-  vehicleName: string;
-  vehicleType: string;
-  vehiclePlate: string;
-  learnerName: string;
-  learnerInitials: string;
-  learnerHours: string;
-  trainerName: string;
-  trainerRole: string;
-  trainerInitials: string;
-  statusTag: string;
-  remainingMinutes: number;
-  isEmergencyAlert?: boolean;
+  studentId: string;
+  studentName: string;
+  studentPhone: string;
+  instructorName: string;
+  date: string;
+  timeSlot: string;
+  vehicle: string;
+  topic: string;
+  status: 'SCHEDULED' | 'COMPLETED' | 'CANCELLED';
+  notes?: string;
 }
 
-export interface PaymentReceipt {
+export interface PaymentRecord {
+  id: string;
   receiptNumber: string;
   date: string;
+  studentId: string;
   studentName: string;
   courseName: string;
   amount: number;
-  paymentMode: 'CASH' | 'UPI' | 'BANK_TRANSFER' | 'CARD';
-  referenceNo: string;
   totalFee: number;
-  remainingBalance: number;
+  balanceAfterPayment: number;
+  paymentMode: 'CASH' | 'UPI' | 'CARD' | 'BANK_TRANSFER';
+  referenceNo: string;
   notes?: string;
 }

@@ -410,7 +410,50 @@ erDiagram
 
 ---
 
-## 12. V1 Scope Boundaries (Strict Adherence)
+## 12. UI/UX Design Philosophy & Guidelines (Human-First & Minimalistic)
+
+The entire application adheres strictly to a **minimalistic, clean, and extremely easy-to-use design philosophy**. 
+
+Target users include driving school owners, receptionists, driving instructors, and students—many of whom are on mobile phones and are not tech-savvy. The software must be completely self-explanatory with zero training required.
+
+### Core Design Rules
+1. **Simplicity Over Clutter:** Prioritise usability over decorative visuals. Avoid unnecessary animations, dark sci-fi telemetry, complex gradients, and excessive shadows.
+2. **Clear Purpose Per Screen:** No overcrowded layouts. Every screen communicates one primary objective with high visual clarity.
+3. **Essential Dashboard Metrics Only:**
+   - **Total Students** (All registered students)
+   - **Active Students** (Currently undergoing training)
+   - **Today's Driving Lessons** (Scheduled drives for today)
+   - **Upcoming Lessons** (Scheduled drives for upcoming days)
+   - **Pending Payments** (Total fee balance due to be collected)
+   - **Recently Registered Students** (Latest enrollments requiring action)
+4. **Frictionless Navigation:**
+   - Clearly labelled menu items with familiar icons and text (`Dashboard`, `Students`, `Lessons`, `Payments`, `Settings`).
+   - Flat hierarchy—avoid deeply nested submenus.
+   - Thumb-friendly bottom navigation on mobile devices.
+5. **Simple Student Management:**
+   - Big, prominent **"+ Add Student"** button.
+   - Plain forms with obvious labels, required field markers, and sensible defaults.
+   - Clean profile view showing contact details, enrolled course, and payment balance.
+6. **Effortless Driving Lesson Management:**
+   - Simple date & time pickers.
+   - Clear lesson statuses: `Scheduled` (Blue), `Completed` (Green), `Cancelled` (Red), `Pending` (Amber).
+   - 1-click status update without navigating away from the list.
+7. **Transparent Payments & Fees:**
+   - 3 clean numbers: **Total Fee**, **Amount Paid**, **Balance Due**.
+   - Simple "Record Payment" form with payment mode (Cash, UPI, Card).
+   - Clean, branded digital receipt preview with instant print/WhatsApp share option.
+8. **Smartphone-First Instructor Interface:**
+   - Tailored for instructors viewing between driving sessions in the vehicle.
+   - Large tap targets (min 48px).
+   - Displays today's lesson sequence with student phone number (1-tap call) and 1-tap "Mark Completed" button.
+9. **Instant User Feedback:**
+   - Clear, friendly success toasts ("Student added successfully!", "Payment of ₹2,500 recorded!").
+   - Confirmation dialog before irreversible deletions.
+   - Clear loading and empty states.
+
+---
+
+## 13. V1 Scope Boundaries (Strict Adherence)
 
 | Module | In V1 Scope | Post-V1 (Explicitly Excluded) |
 |---|---|---|
@@ -423,7 +466,7 @@ erDiagram
 
 ---
 
-## 13. Next Action Plan & Milestones
+## 14. Next Action Plan & Milestones
 
 1. **Phase 1: Frontend UI System (Completed)**
    - [x] Initialized React 19 + TypeScript + Vite frontend project in `./frontend`.

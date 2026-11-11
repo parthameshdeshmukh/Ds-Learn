@@ -4,34 +4,21 @@
 
 @layer base {
   :root {
-    --school-primary: #006194;
-    --school-primary-hover: #004d77;
-    --school-primary-container: #007bb9;
-    --school-secondary-container: #dae2fd;
+    --school-primary: #2563eb;
+    --school-primary-hover: #1d4ed8;
+    --school-primary-light: #eff6ff;
   }
 
   html, body {
-    width: 100vw;
     margin: 0;
     padding: 0;
     overflow-x: hidden;
+    background-color: #f8fafc;
+    color: #0f172a;
+    font-family: 'Inter', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
   }
 
-  body {
-    overscroll-behavior: none;
-    background-color: #f8f9ff;
-    color: #0b1c30;
-  }
-
-  .pb-safe {
-    padding-bottom: env(safe-area-inset-bottom, 0px);
-  }
-
-  .pt-safe {
-    padding-top: env(safe-area-inset-top, 0px);
-  }
-
-  /* Material Symbols utility */
+  /* Material Symbols standard sizing and alignment */
   .material-symbols-outlined {
     font-variation-settings:
       'FILL' 0,
@@ -43,6 +30,7 @@
   }
 }
 
+/* Hide scrollbars for clean presentation */
 ::-webkit-scrollbar {
   display: none;
 }
