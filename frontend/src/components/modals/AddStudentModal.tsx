@@ -215,3 +215,4 @@ export const AddStudentModal: React.FC = () => {
     </div>
   );
 };
+

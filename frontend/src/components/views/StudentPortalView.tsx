@@ -118,3 +118,4 @@ export const StudentPortalView: React.FC = () => {
     </div>
   );
 };
+

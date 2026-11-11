@@ -151,3 +151,4 @@ export const LessonsView: React.FC = () => {
     </div>
   );
 };
+

@@ -34,8 +34,14 @@ export const BottomNav: React.FC<BottomNavProps> = ({ activeTab, setActiveTab })
       ? instructorTabs
       : studentTabs;
 
+  // On desktop (md and above), hide bottom nav for School Owner since they have the Left Sidebar!
+  const containerClass =
+    activeRole === 'SCHOOL_OWNER'
+      ? 'md:hidden fixed bottom-0 left-0 right-0 z-40 bg-white border-t border-slate-200'
+      : 'fixed bottom-0 left-0 right-0 z-40 bg-white border-t border-slate-200';
+
   return (
-    <nav className="fixed bottom-0 left-0 right-0 z-40 bg-white border-t border-slate-200">
+    <nav className={containerClass}>
       <div className="max-w-md mx-auto flex items-center justify-around h-16 px-2">
         {currentTabs.map((tab) => {
           const isActive = activeTab === tab.id;

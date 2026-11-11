@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { TenantProvider, useTenant } from './context/TenantContext';
 import { Header } from './components/Header';
+import { Sidebar } from './components/Sidebar';
 import { BottomNav } from './components/BottomNav';
 import { Toast } from './components/Toast';
 
@@ -23,34 +24,46 @@ const AppContent: React.FC = () => {
   const { activeRole } = useTenant();
   const [activeTab, setActiveTab] = useState<string>('dashboard');
 
+  const isOwner = activeRole === 'SCHOOL_OWNER';
+
   return (
-    <div className="min-h-screen bg-slate-50 flex flex-col font-sans text-slate-900 antialiased">
-      {/* Top Clean Header */}
-      <Header />
+    <div className="min-h-screen bg-slate-50 flex font-sans text-slate-900 antialiased">
+      {/* Desktop Left Sidebar (Active on PC for School Owner & Receptionist) */}
+      {isOwner && <Sidebar activeTab={activeTab} setActiveTab={setActiveTab} />}
 
-      {/* Main Content Area */}
-      <main className="flex-1 w-full max-w-4xl mx-auto px-4 py-6 pb-28">
-        {/* Role 1: School Owner / Receptionist */}
-        {activeRole === 'SCHOOL_OWNER' && (
-          <>
-            {activeTab === 'dashboard' && <DashboardView onNavigateTab={setActiveTab} />}
-            {activeTab === 'students' && <StudentsView />}
-            {activeTab === 'lessons' && <LessonsView />}
-            {activeTab === 'payments' && <PaymentsView />}
-          </>
-        )}
+      {/* Main App Container */}
+      <div className="flex-1 flex flex-col min-w-0">
+        {/* Top Header */}
+        <Header />
 
-        {/* Role 2: Driving Instructor */}
-        {activeRole === 'INSTRUCTOR' && <InstructorView />}
+        {/* Content Area */}
+        <main
+          className={`flex-1 w-full px-4 sm:px-6 py-6 pb-28 ${
+            isOwner ? 'max-w-6xl mx-auto' : 'max-w-lg mx-auto'
+          }`}
+        >
+          {/* Role 1: School Owner & Receptionist (Desktop + Mobile) */}
+          {activeRole === 'SCHOOL_OWNER' && (
+            <>
+              {activeTab === 'dashboard' && <DashboardView onNavigateTab={setActiveTab} />}
+              {activeTab === 'students' && <StudentsView />}
+              {activeTab === 'lessons' && <LessonsView />}
+              {activeTab === 'payments' && <PaymentsView />}
+            </>
+          )}
 
-        {/* Role 3: Student Portal */}
-        {activeRole === 'STUDENT' && <StudentPortalView />}
-      </main>
+          {/* Role 2: Driving Instructor (Mobile Phone View) */}
+          {activeRole === 'INSTRUCTOR' && <InstructorView />}
 
-      {/* Bottom Sticky Navigation */}
-      <BottomNav activeTab={activeTab} setActiveTab={setActiveTab} />
+          {/* Role 3: Student Portal (Mobile Phone View) */}
+          {activeRole === 'STUDENT' && <StudentPortalView />}
+        </main>
 
-      {/* Modals & Dialogs */}
+        {/* Bottom Navigation (Always on Phone, hidden on Desktop for Owner) */}
+        <BottomNav activeTab={activeTab} setActiveTab={setActiveTab} />
+      </div>
+
+      {/* Global Modals */}
       <AddStudentModal />
       <RecordPaymentModal />
       <ScheduleLessonModal />

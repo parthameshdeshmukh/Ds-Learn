@@ -14,11 +14,11 @@ export const Header: React.FC = () => {
 
   return (
     <header className="bg-white border-b border-slate-200 sticky top-0 z-40">
-      <div className="max-w-5xl mx-auto px-4 h-16 flex items-center justify-between gap-3">
-        {/* Driving School Branding */}
+      <div className="w-full px-4 sm:px-6 h-16 flex items-center justify-between gap-3">
+        {/* Driving School Branding (Hidden on desktop if sidebar is active for Owner) */}
         <div className="flex items-center gap-3 min-w-0">
           <div
-            className="w-10 h-10 rounded-lg flex items-center justify-center text-white flex-shrink-0 shadow-sm"
+            className={`w-10 h-10 rounded-lg flex items-center justify-center text-white shrink-0 shadow-sm ${activeRole === 'SCHOOL_OWNER' ? 'md:hidden' : ''}`}
             style={{ backgroundColor: activeSchool.primaryColor }}
           >
             <span className="material-symbols-outlined text-[24px]">{activeSchool.logoIcon}</span>

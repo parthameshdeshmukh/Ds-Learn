@@ -170,3 +170,4 @@ export const InstructorView: React.FC = () => {
     </div>
   );
 };
+
