@@ -170,6 +170,32 @@ export const AddStudentModal: React.FC = () => {
               </div>
             </div>
 
+            {/* Quick 1-Tap Deposit Presets */}
+            <div className="flex items-center gap-1.5 pt-1">
+              <span className="text-[11px] text-slate-500 font-medium">Quick Fill:</span>
+              <button
+                type="button"
+                onClick={() => setInitialPayment(totalFee)}
+                className="px-2.5 py-0.5 rounded-md text-xs font-semibold bg-emerald-50 text-emerald-700 border border-emerald-200 hover:bg-emerald-100"
+              >
+                Full (${totalFee})
+              </button>
+              <button
+                type="button"
+                onClick={() => setInitialPayment(250)}
+                className="px-2.5 py-0.5 rounded-md text-xs font-medium bg-slate-100 text-slate-700 hover:bg-slate-200"
+              >
+                Deposit ($250)
+              </button>
+              <button
+                type="button"
+                onClick={() => setInitialPayment(0)}
+                className="px-2.5 py-0.5 rounded-md text-xs font-medium bg-slate-100 text-slate-700 hover:bg-slate-200"
+              >
+                Pay Later ($0)
+              </button>
+            </div>
+
             {initialPayment > 0 && (
               <div>
                 <label className="text-xs font-semibold text-slate-600 block mb-1">Payment Method</label>

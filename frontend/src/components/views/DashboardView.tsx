@@ -65,19 +65,19 @@ export const DashboardView: React.FC<DashboardViewProps> = ({ onNavigateTab }) =
         </div>
       </div>
 
-      {/* The 6 Essential Summary Metric Cards */}
-      <div className="grid grid-cols-2 md:grid-cols-3 gap-3 sm:gap-4">
-        {/* Total Students */}
+      {/* The 4 Core Essential Summary Metric Cards */}
+      <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-4">
+        {/* Today's Lessons */}
         <div
-          onClick={() => onNavigateTab('students')}
+          onClick={() => onNavigateTab('lessons')}
           className="bg-white p-4 rounded-xl border border-slate-200 shadow-sm cursor-pointer hover:border-slate-300 transition-colors"
         >
           <div className="flex items-center justify-between text-slate-500 mb-1">
-            <span className="text-xs sm:text-sm font-medium">Total Students</span>
-            <span className="material-symbols-outlined text-[20px] text-blue-600">group</span>
+            <span className="text-xs sm:text-sm font-semibold text-slate-700">Today's Lessons</span>
+            <span className="material-symbols-outlined text-[20px] text-blue-600">event</span>
           </div>
-          <div className="text-2xl sm:text-3xl font-bold text-slate-900">{totalStudents}</div>
-          <span className="text-xs text-slate-400 mt-1 block">Registered in school</span>
+          <div className="text-2xl sm:text-3xl font-extrabold text-slate-900">{todayLessons.length}</div>
+          <span className="text-[11px] text-blue-600 font-semibold mt-1 block">Scheduled for today</span>
         </div>
 
         {/* Active Students */}
@@ -86,37 +86,11 @@ export const DashboardView: React.FC<DashboardViewProps> = ({ onNavigateTab }) =
           className="bg-white p-4 rounded-xl border border-slate-200 shadow-sm cursor-pointer hover:border-slate-300 transition-colors"
         >
           <div className="flex items-center justify-between text-slate-500 mb-1">
-            <span className="text-xs sm:text-sm font-medium">Active Students</span>
+            <span className="text-xs sm:text-sm font-semibold text-slate-700">Active Students</span>
             <span className="material-symbols-outlined text-[20px] text-emerald-600">check_circle</span>
           </div>
-          <div className="text-2xl sm:text-3xl font-bold text-slate-900">{activeStudents}</div>
-          <span className="text-xs text-emerald-600 font-medium mt-1 block">Taking lessons</span>
-        </div>
-
-        {/* Today's Lessons */}
-        <div
-          onClick={() => onNavigateTab('lessons')}
-          className="bg-white p-4 rounded-xl border border-slate-200 shadow-sm cursor-pointer hover:border-slate-300 transition-colors"
-        >
-          <div className="flex items-center justify-between text-slate-500 mb-1">
-            <span className="text-xs sm:text-sm font-medium">Today's Lessons</span>
-            <span className="material-symbols-outlined text-[20px] text-amber-600">event</span>
-          </div>
-          <div className="text-2xl sm:text-3xl font-bold text-slate-900">{todayLessons.length}</div>
-          <span className="text-xs text-amber-600 font-medium mt-1 block">Scheduled for today</span>
-        </div>
-
-        {/* Upcoming Lessons */}
-        <div
-          onClick={() => onNavigateTab('lessons')}
-          className="bg-white p-4 rounded-xl border border-slate-200 shadow-sm cursor-pointer hover:border-slate-300 transition-colors"
-        >
-          <div className="flex items-center justify-between text-slate-500 mb-1">
-            <span className="text-xs sm:text-sm font-medium">Upcoming Lessons</span>
-            <span className="material-symbols-outlined text-[20px] text-indigo-600">upcoming</span>
-          </div>
-          <div className="text-2xl sm:text-3xl font-bold text-slate-900">{upcomingLessons.length}</div>
-          <span className="text-xs text-slate-400 mt-1 block">Next days scheduled</span>
+          <div className="text-2xl sm:text-3xl font-extrabold text-slate-900">{activeStudents}</div>
+          <span className="text-[11px] text-emerald-600 font-semibold mt-1 block">{activeStudents} of {totalStudents} enrolled</span>
         </div>
 
         {/* Pending Payments */}
@@ -125,24 +99,24 @@ export const DashboardView: React.FC<DashboardViewProps> = ({ onNavigateTab }) =
           className="bg-white p-4 rounded-xl border border-slate-200 shadow-sm cursor-pointer hover:border-slate-300 transition-colors"
         >
           <div className="flex items-center justify-between text-slate-500 mb-1">
-            <span className="text-xs sm:text-sm font-medium">Pending Payments</span>
+            <span className="text-xs sm:text-sm font-semibold text-slate-700">Pending Fees</span>
             <span className="material-symbols-outlined text-[20px] text-rose-600">pending_actions</span>
           </div>
-          <div className="text-2xl sm:text-3xl font-bold text-rose-600">${pendingPaymentsTotal}</div>
-          <span className="text-xs text-rose-500 font-medium mt-1 block">Fee balance to collect</span>
+          <div className="text-2xl sm:text-3xl font-extrabold text-rose-600">${pendingPaymentsTotal}</div>
+          <span className="text-[11px] text-rose-500 font-semibold mt-1 block">Fee balance to collect</span>
         </div>
 
-        {/* Recently Registered */}
+        {/* Upcoming Lessons */}
         <div
-          onClick={() => onNavigateTab('students')}
+          onClick={() => onNavigateTab('lessons')}
           className="bg-white p-4 rounded-xl border border-slate-200 shadow-sm cursor-pointer hover:border-slate-300 transition-colors"
         >
           <div className="flex items-center justify-between text-slate-500 mb-1">
-            <span className="text-xs sm:text-sm font-medium">Recent Students</span>
-            <span className="material-symbols-outlined text-[20px] text-purple-600">person_add</span>
+            <span className="text-xs sm:text-sm font-semibold text-slate-700">Upcoming Lessons</span>
+            <span className="material-symbols-outlined text-[20px] text-indigo-600">upcoming</span>
           </div>
-          <div className="text-2xl sm:text-3xl font-bold text-slate-900">{recentStudents.length}</div>
-          <span className="text-xs text-slate-400 mt-1 block">Joined recently</span>
+          <div className="text-2xl sm:text-3xl font-extrabold text-slate-900">{upcomingLessons.length}</div>
+          <span className="text-[11px] text-slate-400 font-medium mt-1 block">Next days scheduled</span>
         </div>
       </div>
 

@@ -4,10 +4,10 @@ import type { DrivingLesson } from '../../types';
 
 interface InstructorViewProps {
   activeTab: string;
-  onNavigateTab: (tab: string) => void;
+  onNavigateTab?: (tab: string) => void;
 }
 
-export const InstructorView: React.FC<InstructorViewProps> = ({ activeTab, onNavigateTab }) => {
+export const InstructorView: React.FC<InstructorViewProps> = ({ activeTab }) => {
   const {
     activeSchool,
     lessons,
@@ -91,32 +91,6 @@ export const InstructorView: React.FC<InstructorViewProps> = ({ activeTab, onNav
         >
           <span className={`w-2 h-2 rounded-full ${isOnDuty ? 'bg-emerald-500 animate-pulse' : 'bg-slate-400'}`}></span>
           <span>{isOnDuty ? 'On Duty' : 'Off Duty'}</span>
-        </button>
-      </div>
-
-      {/* View Switcher Tabs (Schedule vs My Students) */}
-      <div className="grid grid-cols-2 gap-1.5 bg-slate-200/60 p-1 rounded-xl">
-        <button
-          onClick={() => onNavigateTab('schedule')}
-          className={`py-2 px-3 rounded-lg text-xs font-bold transition-all flex items-center justify-center gap-1.5 ${
-            activeTab === 'schedule'
-              ? 'bg-white text-slate-900 shadow-sm'
-              : 'text-slate-600 hover:text-slate-900'
-          }`}
-        >
-          <span className="material-symbols-outlined text-[18px]">calendar_today</span>
-          <span>Today's Schedule ({dayLessons.length})</span>
-        </button>
-        <button
-          onClick={() => onNavigateTab('my-students')}
-          className={`py-2 px-3 rounded-lg text-xs font-bold transition-all flex items-center justify-center gap-1.5 ${
-            activeTab === 'my-students'
-              ? 'bg-white text-slate-900 shadow-sm'
-              : 'text-slate-600 hover:text-slate-900'
-          }`}
-        >
-          <span className="material-symbols-outlined text-[18px]">school</span>
-          <span>My Students ({myStudents.length})</span>
         </button>
       </div>
 
@@ -241,51 +215,47 @@ export const InstructorView: React.FC<InstructorViewProps> = ({ activeTab, onNav
                       </a>
                     </div>
 
-                    {/* Direct Actions: WhatsApp + Reschedule + 1-Tap Done */}
-                    <div className="pt-1 flex items-center gap-2">
-                      <button
-                        onClick={() => sendWhatsAppReminder(lesson)}
-                        className="h-10 px-3 rounded-xl bg-emerald-50 hover:bg-emerald-100 border border-emerald-200 text-emerald-800 text-xs font-bold flex items-center gap-1.5 transition-colors"
-                        title="Send instant WhatsApp: Arriving in 5 mins"
-                      >
-                        <span className="material-symbols-outlined text-[18px] text-emerald-600">chat</span>
-                        <span>WhatsApp</span>
-                      </button>
-
+                    {/* Ergonomic Mobile Actions */}
+                    <div className="pt-1">
                       {isCompleted ? (
-                        <div className="flex-1 h-10 rounded-xl bg-emerald-100 border border-emerald-200 text-emerald-800 text-xs font-bold flex items-center justify-center gap-1.5">
+                        <div className="w-full h-11 rounded-xl bg-emerald-50 border border-emerald-200 text-emerald-800 text-xs font-bold flex items-center justify-center gap-1.5">
                           <span className="material-symbols-outlined text-[18px]">check_circle</span>
-                          <span>Completed</span>
+                          <span>Lesson Completed</span>
                         </div>
                       ) : isCancelled ? (
-                        <div className="flex-1 h-10 rounded-xl bg-rose-50 border border-rose-200 text-rose-800 text-xs font-bold flex items-center justify-center gap-1.5">
+                        <div className="w-full h-11 rounded-xl bg-rose-50 border border-rose-200 text-rose-800 text-xs font-bold flex items-center justify-center gap-1.5">
                           <span className="material-symbols-outlined text-[18px]">cancel</span>
-                          <span>Cancelled</span>
+                          <span>Lesson Cancelled</span>
                         </div>
                       ) : (
-                        <div className="flex-1 flex items-center gap-1.5">
+                        <div className="space-y-2">
                           <button
                             onClick={() => updateLessonStatus(lesson.id, 'COMPLETED')}
-                            className="flex-1 h-10 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white font-bold text-xs flex items-center justify-center gap-1.5 shadow-sm transition-transform active:scale-[0.99]"
+                            className="w-full h-11 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white font-bold text-sm flex items-center justify-center gap-2 shadow-sm transition-transform active:scale-[0.99]"
                           >
-                            <span className="material-symbols-outlined text-[18px]">check</span>
-                            <span>Mark Done</span>
+                            <span className="material-symbols-outlined text-[20px]">check</span>
+                            <span>Mark Lesson Done</span>
                           </button>
-                          <button
-                            onClick={() => setReschedulingLesson(lesson)}
-                            className="h-10 px-2.5 rounded-xl border border-slate-200 hover:bg-slate-100 text-xs font-semibold text-slate-700 flex items-center gap-1 transition-colors"
-                            title="Reschedule to another day or time"
-                          >
-                            <span className="material-symbols-outlined text-[16px] text-blue-600">schedule</span>
-                            <span className="hidden sm:inline">Reschedule</span>
-                          </button>
-                          <button
-                            onClick={() => updateLessonStatus(lesson.id, 'CANCELLED')}
-                            className="h-10 px-2.5 rounded-xl border border-slate-200 hover:bg-slate-100 text-xs font-medium text-slate-500"
-                            title="Cancel lesson"
-                          >
-                            Cancel
-                          </button>
+
+                          <div className="grid grid-cols-2 gap-2">
+                            <button
+                              onClick={() => sendWhatsAppReminder(lesson)}
+                              className="h-10 px-3 rounded-xl bg-slate-50 hover:bg-slate-100 border border-slate-200 text-slate-800 text-xs font-semibold flex items-center justify-center gap-1.5 transition-colors"
+                              title="Send arrival WhatsApp message"
+                            >
+                              <span className="material-symbols-outlined text-[18px] text-emerald-600">chat</span>
+                              <span>WhatsApp</span>
+                            </button>
+
+                            <button
+                              onClick={() => setReschedulingLesson(lesson)}
+                              className="h-10 px-3 rounded-xl bg-slate-50 hover:bg-slate-100 border border-slate-200 text-slate-800 text-xs font-semibold flex items-center justify-center gap-1.5 transition-colors"
+                              title="Reschedule to another day or time"
+                            >
+                              <span className="material-symbols-outlined text-[18px] text-blue-600">event_repeat</span>
+                              <span>Reschedule</span>
+                            </button>
+                          </div>
                         </div>
                       )}
                     </div>

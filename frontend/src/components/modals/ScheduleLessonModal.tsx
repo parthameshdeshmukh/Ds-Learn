@@ -13,6 +13,32 @@ export const ScheduleLessonModal: React.FC = () => {
 
   if (!isScheduleLessonModalOpen) return null;
 
+  const quickTopics = [
+    'Clutch & Steering',
+    'Reverse Parking',
+    'Traffic & Roundabouts',
+    'Highway Merging',
+    'Hill Start / Slope',
+    'Mock Test',
+  ];
+
+  const handleStudentSelect = (id: string) => {
+    setStudentId(id);
+    const s = students.find((item) => item.id === id);
+    if (s) {
+      if (s.instructorName) {
+        setInstructor(s.instructorName);
+      }
+      if (s.course.toLowerCase().includes('motorcycle') || s.course.toLowerCase().includes('bike') || s.course.toLowerCase().includes('two wheeler')) {
+        setVehicle('Hero Honda #01 (Bike)');
+      } else if (s.course.toLowerCase().includes('auto')) {
+        setVehicle('Hyundai i10 #02 (Auto)');
+      } else {
+        setVehicle('Swift Dzire #04 (Manual)');
+      }
+    }
+  };
+
   const selectedStudent = students.find((s) => s.id === studentId) || students[0];
 
   const handleSubmit = (e: React.FormEvent) => {
@@ -58,7 +84,7 @@ export const ScheduleLessonModal: React.FC = () => {
             </label>
             <select
               value={studentId}
-              onChange={(e) => setStudentId(e.target.value)}
+              onChange={(e) => handleStudentSelect(e.target.value)}
               className="w-full h-11 px-3 rounded-lg border border-slate-300 text-sm text-slate-900 bg-white focus:outline-none focus:ring-2 focus:ring-blue-500 font-medium"
             >
               {students.map((s) => (
@@ -69,21 +95,27 @@ export const ScheduleLessonModal: React.FC = () => {
             </select>
           </div>
 
-          <div className="grid grid-cols-2 gap-3">
-            <div>
-              <label className="text-xs font-semibold text-slate-700 block mb-1">Lesson Day</label>
-              <select
-                value={date}
-                onChange={(e) => setDate(e.target.value)}
-                className="w-full h-10 px-3 rounded-lg border border-slate-300 text-sm bg-white"
-              >
-                <option value="Today">Today</option>
-                <option value="Tomorrow">Tomorrow</option>
-                <option value="Friday">Friday</option>
-                <option value="Saturday">Saturday</option>
-              </select>
+          <div>
+            <label className="text-xs font-semibold text-slate-700 block mb-1">Lesson Day</label>
+            <div className="grid grid-cols-4 gap-1.5">
+              {(['Today', 'Tomorrow', 'Friday', 'Saturday'] as const).map((d) => (
+                <button
+                  type="button"
+                  key={d}
+                  onClick={() => setDate(d)}
+                  className={`h-9 rounded-lg text-xs font-semibold border transition-all ${
+                    date === d
+                      ? 'bg-slate-900 text-white border-slate-900 shadow-sm'
+                      : 'bg-slate-50 border-slate-200 text-slate-700 hover:bg-slate-100'
+                  }`}
+                >
+                  {d}
+                </button>
+              ))}
             </div>
+          </div>
 
+          <div className="grid grid-cols-2 gap-3">
             <div>
               <label className="text-xs font-semibold text-slate-700 block mb-1">Time Slot</label>
               <select
@@ -98,9 +130,7 @@ export const ScheduleLessonModal: React.FC = () => {
                 <option value="04:00 PM - 05:00 PM">04:00 PM - 05:00 PM</option>
               </select>
             </div>
-          </div>
 
-          <div className="grid grid-cols-2 gap-3">
             <div>
               <label className="text-xs font-semibold text-slate-700 block mb-1">Instructor</label>
               <select
@@ -112,28 +142,50 @@ export const ScheduleLessonModal: React.FC = () => {
                 <option value="Sarah Sterling">Sarah Sterling</option>
               </select>
             </div>
-
-            <div>
-              <label className="text-xs font-semibold text-slate-700 block mb-1">Vehicle</label>
-              <select
-                value={vehicle}
-                onChange={(e) => setVehicle(e.target.value)}
-                className="w-full h-10 px-3 rounded-lg border border-slate-300 text-sm bg-white"
-              >
-                <option value="Swift Dzire #04 (Manual)">Swift Dzire (Manual)</option>
-                <option value="Hyundai i10 #02 (Auto)">Hyundai i10 (Automatic)</option>
-                <option value="Hero Honda #01 (Bike)">Hero Honda (Motorcycle)</option>
-              </select>
-            </div>
           </div>
 
           <div>
-            <label className="text-xs font-semibold text-slate-700 block mb-1">Lesson Topic / Focus</label>
+            <label className="text-xs font-semibold text-slate-700 block mb-1">Vehicle</label>
+            <select
+              value={vehicle}
+              onChange={(e) => setVehicle(e.target.value)}
+              className="w-full h-10 px-3 rounded-lg border border-slate-300 text-sm bg-white"
+            >
+              <option value="Swift Dzire #04 (Manual)">Swift Dzire #04 (Manual)</option>
+              <option value="Hyundai i10 #02 (Auto)">Hyundai i10 #02 (Automatic)</option>
+              <option value="Hero Honda #01 (Bike)">Hero Honda #01 (Motorcycle)</option>
+            </select>
+          </div>
+
+          <div>
+            <div className="flex items-center justify-between mb-1">
+              <label className="text-xs font-semibold text-slate-700">Lesson Topic / Focus</label>
+              <span className="text-[11px] text-slate-400">1-tap syllabus presets</span>
+            </div>
+
+            {/* 1-Tap Quick Suggestion Topic Pills */}
+            <div className="flex flex-wrap gap-1.5 mb-2">
+              {quickTopics.map((item) => (
+                <button
+                  type="button"
+                  key={item}
+                  onClick={() => setTopic(item)}
+                  className={`px-2.5 py-1 rounded-lg text-xs font-medium border transition-colors ${
+                    topic === item
+                      ? 'bg-blue-50 text-blue-800 border-blue-300 font-semibold'
+                      : 'bg-slate-50 text-slate-600 border-slate-200 hover:bg-slate-100'
+                  }`}
+                >
+                  {item}
+                </button>
+              ))}
+            </div>
+
             <input
               type="text"
               value={topic}
               onChange={(e) => setTopic(e.target.value)}
-              placeholder="e.g. Reverse parking, Highway merging"
+              placeholder="Or type custom lesson topic..."
               className="w-full h-10 px-3 rounded-lg border border-slate-300 text-sm"
             />
           </div>

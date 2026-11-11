@@ -74,19 +74,18 @@ export const Header: React.FC = () => {
                   <span className="material-symbols-outlined text-[20px]">school</span>
                   <span>Student View</span>
                 </button>
+                <div className="pt-1 mt-1 border-t border-slate-100">
+                  <button
+                    onClick={() => { setIsTenantModalOpen(true); setShowRoleMenu(false); }}
+                    className="w-full text-left px-3 py-2 text-xs text-slate-500 hover:text-slate-800 hover:bg-slate-50 flex items-center gap-2 transition-colors font-medium"
+                  >
+                    <span className="material-symbols-outlined text-[18px]">swap_horiz</span>
+                    <span>Switch Driving School...</span>
+                  </button>
+                </div>
               </div>
             )}
           </div>
-
-          {/* School Switcher (Multi-Tenant Demo) */}
-          <button
-            onClick={() => setIsTenantModalOpen(true)}
-            title="Switch Driving School"
-            className="h-9 px-2.5 rounded-lg border border-slate-200 bg-white hover:bg-slate-50 text-slate-600 text-xs font-medium flex items-center gap-1 transition-colors"
-          >
-            <span className="material-symbols-outlined text-[18px]">swap_horiz</span>
-            <span className="hidden md:inline">School</span>
-          </button>
         </div>
       </div>
     </header>

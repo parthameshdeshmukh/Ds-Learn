@@ -3,10 +3,10 @@ import { useTenant } from '../../context/TenantContext';
 
 interface StudentPortalViewProps {
   activeTab: string;
-  onNavigateTab: (tab: string) => void;
+  onNavigateTab?: (tab: string) => void;
 }
 
-export const StudentPortalView: React.FC<StudentPortalViewProps> = ({ activeTab, onNavigateTab }) => {
+export const StudentPortalView: React.FC<StudentPortalViewProps> = ({ activeTab }) => {
   const { activeSchool, students, lessons, payments, setSelectedReceipt } = useTenant();
 
   // Sophia Martinez context
@@ -26,34 +26,6 @@ export const StudentPortalView: React.FC<StudentPortalViewProps> = ({ activeTab,
         <p className="text-xs text-slate-500 mt-1">
           {currentStudent.course} • Enrolled on {currentStudent.registrationDate}
         </p>
-      </div>
-
-      {/* Quick Navigation Pills for Mobile */}
-      <div className="grid grid-cols-3 gap-1 bg-slate-200/60 p-1 rounded-xl text-xs font-bold">
-        <button
-          onClick={() => onNavigateTab('course')}
-          className={`py-2 px-2 rounded-lg transition-all ${
-            activeTab === 'course' ? 'bg-white text-slate-900 shadow-sm' : 'text-slate-600 hover:text-slate-900'
-          }`}
-        >
-          My Course
-        </button>
-        <button
-          onClick={() => onNavigateTab('lessons')}
-          className={`py-2 px-2 rounded-lg transition-all ${
-            activeTab === 'lessons' ? 'bg-white text-slate-900 shadow-sm' : 'text-slate-600 hover:text-slate-900'
-          }`}
-        >
-          My Lessons ({myLessons.length})
-        </button>
-        <button
-          onClick={() => onNavigateTab('payments')}
-          className={`py-2 px-2 rounded-lg transition-all ${
-            activeTab === 'payments' ? 'bg-white text-slate-900 shadow-sm' : 'text-slate-600 hover:text-slate-900'
-          }`}
-        >
-          My Payments
-        </button>
       </div>
 
       {/* TAB 1: MY COURSE */}
