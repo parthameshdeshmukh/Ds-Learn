@@ -468,17 +468,18 @@ Target users include driving school owners, receptionists, driving instructors, 
 
 ## 14. Next Action Plan & Milestones
 
-1. **Phase 1: Frontend UI System (Completed)**
+1. **Phase 1: Frontend UI/UX System (Completed & Streamlined)**
    - [x] Initialized React 19 + TypeScript + Vite frontend project in `./frontend`.
-   - [x] Extracted and configured the `Kinetic Precision` design system tokens into `tailwind.config.js`.
-   - [x] Implemented dynamic white-label CSS variables (`--school-primary`, `--school-primary-container`, etc.) for on-the-fly tenant rebranding.
-   - [x] Converted uploaded UI designs into interactive React components:
-     - **School Owner Dashboard (`OwnerDashboard.tsx`)**: Operations pulse, active triads, queue approvals, and transaction history.
-     - **Student Hub (`StudentDashboard.tsx`)**: Target exam goal, next in-car session tracker, trainer team, and payment ledger.
-     - **Trainer Cockpit (`TrainerCockpit.tsx`)**: Shift status toggle, vehicle telemetry, and live drive competencies checklist.
-     - **Branded Payment Receipt (`ReceiptModal.tsx`)**: Printable/downloadable receipt with school metadata.
-     - **Direct Enrollment (`WalkInStudentModal.tsx`)**: Walk-in registration with instant ledger recording.
-     - **Tenant Switcher (`TenantSwitcherModal.tsx`)**: Instant demonstration of switching between driving schools.
+   - [x] Implemented dynamic white-label CSS variables (`--school-primary`, etc.) for on-the-fly tenant rebranding across all driving schools.
+   - [x] Streamlined UX to a clean, human-first, minimalistic interface suitable for non-technical users on smartphones and desktop PCs:
+     - **School Owner View (`DashboardView.tsx`, `Sidebar.tsx`)**: 4 essential metrics (Today's Lessons, Active Students, Pending Fees, Upcoming Lessons) + desktop sidebar and fast-action modals.
+     - **Instructor Smartphone View (`InstructorView.tsx`)**: Interactive 4-day calendar strip (`Today`, `Tomorrow`, `Friday`, `Saturday`), chronological student cards, 1-tap "Mark Lesson Done", 1-tap WhatsApp reminder, and 1-tap Reschedule modal.
+     - **Student Portal (`StudentPortalView.tsx`)**: Clear course progress bar, instructor details with 1-tap call, upcoming lesson reminder, and payment receipts.
+     - **1-Tap Form Presets (`ScheduleLessonModal.tsx`, `AddStudentModal.tsx`, `RecordPaymentModal.tsx`)**:
+       - 1-tap syllabus topic chips (*Clutch & Steering, Reverse Parking, Traffic & Roundabouts, Highway Merging, Hill Start, Mock Test*).
+       - Auto instructor & vehicle matching by course.
+       - Quick-fill payment buttons (*Full Due, Deposit, Pay Later*).
+       - Removed duplicate in-page navigation tabs in favor of the canonical bottom bar.
    - [x] Verified zero-error production build (`npm run build`).
 
 2. **Phase 2: Backend API & Database (Next)**
