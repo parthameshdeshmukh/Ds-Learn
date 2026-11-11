@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { useTenant } from '../../context/TenantContext';
 
 export const LessonsView: React.FC = () => {
-  const { activeSchool, lessons, setIsScheduleLessonModalOpen, updateLessonStatus } = useTenant();
+  const { activeSchool, lessons, setIsScheduleLessonModalOpen, updateLessonStatus, setReschedulingLesson } = useTenant();
   const [filter, setFilter] = useState<'ALL' | 'TODAY' | 'UPCOMING'>('TODAY');
 
   const filteredLessons = lessons.filter((l) => {
@@ -124,6 +124,14 @@ export const LessonsView: React.FC = () => {
                       >
                         <span className="material-symbols-outlined text-[18px]">check</span>
                         <span>Mark Done</span>
+                      </button>
+                      <button
+                        onClick={() => setReschedulingLesson(lesson)}
+                        className="h-10 px-3 rounded-lg border border-slate-200 hover:bg-slate-100 text-slate-700 text-xs font-semibold flex items-center gap-1 transition-colors"
+                        title="Reschedule lesson"
+                      >
+                        <span className="material-symbols-outlined text-[16px] text-blue-600">schedule</span>
+                        <span>Reschedule</span>
                       </button>
                       <button
                         onClick={() => updateLessonStatus(lesson.id, 'CANCELLED')}

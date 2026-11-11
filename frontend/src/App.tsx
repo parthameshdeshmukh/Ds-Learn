@@ -19,6 +19,7 @@ import { RecordPaymentModal } from './components/modals/RecordPaymentModal';
 import { ScheduleLessonModal } from './components/modals/ScheduleLessonModal';
 import { ReceiptModal } from './components/modals/ReceiptModal';
 import { TenantSwitcherModal } from './components/modals/TenantSwitcherModal';
+import { RescheduleLessonModal } from './components/modals/RescheduleLessonModal';
 
 const AppContent: React.FC = () => {
   const { activeRole } = useTenant();
@@ -67,6 +68,7 @@ const AppContent: React.FC = () => {
       <AddStudentModal />
       <RecordPaymentModal />
       <ScheduleLessonModal />
+      <RescheduleLessonModal />
       <ReceiptModal />
       <TenantSwitcherModal />
 

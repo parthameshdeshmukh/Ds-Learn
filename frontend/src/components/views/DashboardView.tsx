@@ -14,6 +14,7 @@ export const DashboardView: React.FC<DashboardViewProps> = ({ onNavigateTab }) =
     setIsRecordPaymentModalOpen,
     setIsScheduleLessonModalOpen,
     updateLessonStatus,
+    setReschedulingLesson,
   } = useTenant();
 
   // Metrics calculation
@@ -209,6 +210,14 @@ export const DashboardView: React.FC<DashboardViewProps> = ({ onNavigateTab }) =
                         >
                           <span className="material-symbols-outlined text-[16px]">check</span>
                           <span>Mark Done</span>
+                        </button>
+                        <button
+                          onClick={() => setReschedulingLesson(lesson)}
+                          className="h-9 px-2.5 rounded-lg border border-slate-200 hover:bg-slate-100 text-slate-700 text-xs font-semibold flex items-center gap-1 transition-colors"
+                          title="Reschedule to another day or time"
+                        >
+                          <span className="material-symbols-outlined text-[15px] text-blue-600">schedule</span>
+                          <span className="hidden sm:inline">Reschedule</span>
                         </button>
                         <button
                           onClick={() => updateLessonStatus(lesson.id, 'CANCELLED')}

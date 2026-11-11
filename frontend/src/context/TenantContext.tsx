@@ -59,6 +59,9 @@ interface TenantContextType {
   addStudent: (student: Omit<Student, 'id' | 'balance' | 'registrationDate' | 'completedLessons' | 'totalLessons'>, initialPayment?: number, paymentMode?: 'CASH' | 'UPI' | 'CARD') => void;
   scheduleLesson: (lesson: Omit<DrivingLesson, 'id' | 'status'>) => void;
   updateLessonStatus: (id: string, status: 'SCHEDULED' | 'COMPLETED' | 'CANCELLED') => void;
+  rescheduleLesson: (lessonId: string, newDate: string, newTimeSlot: string, newInstructor?: string) => void;
+  reschedulingLesson: DrivingLesson | null;
+  setReschedulingLesson: (lesson: DrivingLesson | null) => void;
   recordPayment: (studentId: string, amount: number, paymentMode: 'CASH' | 'UPI' | 'CARD', notes?: string) => void;
   selectedReceipt: PaymentRecord | null;
   setSelectedReceipt: (receipt: PaymentRecord | null) => void;
@@ -85,6 +88,7 @@ export const TenantProvider: React.FC<{ children: React.ReactNode }> = ({ childr
   const [isRecordPaymentModalOpen, setIsRecordPaymentModalOpen] = useState(false);
   const [isScheduleLessonModalOpen, setIsScheduleLessonModalOpen] = useState(false);
   const [isTenantModalOpen, setIsTenantModalOpen] = useState(false);
+  const [reschedulingLesson, setReschedulingLesson] = useState<DrivingLesson | null>(null);
 
   const [toast, setToast] = useState<ToastInfo | null>(null);
 
@@ -405,6 +409,31 @@ export const TenantProvider: React.FC<{ children: React.ReactNode }> = ({ childr
     }
   };
 
+  // Reschedule a lesson
+  const rescheduleLesson = (
+    lessonId: string,
+    newDate: string,
+    newTimeSlot: string,
+    newInstructor?: string
+  ) => {
+    setLessons((prev) =>
+      prev.map((l) =>
+        l.id === lessonId
+          ? {
+              ...l,
+              date: newDate,
+              timeSlot: newTimeSlot,
+              instructorName: newInstructor || l.instructorName,
+              status: 'SCHEDULED',
+            }
+          : l
+      )
+    );
+    const target = lessons.find((l) => l.id === lessonId);
+    showToast(`Lesson for ${target?.studentName || 'student'} rescheduled to ${newDate} (${newTimeSlot})`);
+    setReschedulingLesson(null);
+  };
+
   // Record a payment
   const recordPayment = (
     studentId: string,
@@ -459,6 +488,9 @@ export const TenantProvider: React.FC<{ children: React.ReactNode }> = ({ childr
         addStudent,
         scheduleLesson,
         updateLessonStatus,
+        rescheduleLesson,
+        reschedulingLesson,
+        setReschedulingLesson,
         recordPayment,
         selectedReceipt,
         setSelectedReceipt,

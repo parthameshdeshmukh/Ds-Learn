@@ -3,7 +3,7 @@ import { useTenant } from '../../context/TenantContext';
 import type { DrivingLesson } from '../../types';
 
 export const InstructorView: React.FC = () => {
-  const { activeSchool, lessons, students, updateLessonStatus, showToast } = useTenant();
+  const { activeSchool, lessons, students, updateLessonStatus, setReschedulingLesson, showToast } = useTenant();
 
   // Active Selected Day in the Calendar Strip
   const [selectedDay, setSelectedDay] = useState<'Today' | 'Tomorrow' | 'Friday' | 'Saturday'>('Today');
@@ -206,7 +206,7 @@ export const InstructorView: React.FC = () => {
                       <span>Cancelled</span>
                     </div>
                   ) : (
-                    <div className="flex-1 flex items-center gap-2">
+                    <div className="flex-1 flex items-center gap-1.5">
                       <button
                         onClick={() => updateLessonStatus(lesson.id, 'COMPLETED')}
                         className="flex-1 h-10 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white font-bold text-xs flex items-center justify-center gap-1.5 shadow-sm transition-transform active:scale-[0.99]"
@@ -215,8 +215,17 @@ export const InstructorView: React.FC = () => {
                         <span>Mark Done</span>
                       </button>
                       <button
+                        onClick={() => setReschedulingLesson(lesson)}
+                        className="h-10 px-2.5 rounded-xl border border-slate-200 hover:bg-slate-100 text-xs font-semibold text-slate-700 flex items-center gap-1 transition-colors"
+                        title="Reschedule to another day or time"
+                      >
+                        <span className="material-symbols-outlined text-[16px] text-blue-600">schedule</span>
+                        <span className="hidden sm:inline">Reschedule</span>
+                      </button>
+                      <button
                         onClick={() => updateLessonStatus(lesson.id, 'CANCELLED')}
                         className="h-10 px-2.5 rounded-xl border border-slate-200 hover:bg-slate-100 text-xs font-medium text-slate-500"
+                        title="Cancel lesson"
                       >
                         Cancel
                       </button>
