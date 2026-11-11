@@ -404,3 +404,4 @@ Builds the production-ready static assets in `frontend/dist` with full TypeScrip
 - **Detailed Product Context & ERD:** [`PROJECT_CONTEXT.md`](file:///c:/Users/prath/OneDrive/Desktop/D.Sas/PROJECT_CONTEXT.md)
 - **Domain TypeScript Interfaces:** [`types/index.ts`](file:///c:/Users/prath/OneDrive/Desktop/D.Sas/frontend/src/types/index.ts)
 - **Multi-Tenant State & Dynamic Theming:** [`TenantContext.tsx`](file:///c:/Users/prath/OneDrive/Desktop/D.Sas/frontend/src/context/TenantContext.tsx)
+
